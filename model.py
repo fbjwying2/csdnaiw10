@@ -45,6 +45,8 @@ class Model():
             tf.int32, shape=[None, self.num_steps], name='label')
 
         self.keep_prob = tf.placeholder(tf.float32, name='keep_prob')
+        
+        
 
         with tf.variable_scope('embedding'):
             if embedding_file:
@@ -72,8 +74,9 @@ class Model():
             cell = tf.nn.rnn_cell.MultiRNNCell([lstm_cell] * self.rnn_layers, state_is_tuple=True)
             cell = tf.nn.rnn_cell.DropoutWrapper(cell, output_keep_prob=self.keep_prob)
 
-            self.state_tensor = cell.zero_state(self.batch_size, tf.float32) #### ????
-            self.outputs_state_tensor, _state_tensor = tf.nn.dynamic_rnn(cell, rnn_inputs, initial_state=self.state_tensor)
+            self.outputs_state_tensor = cell.zero_state(self.state_size, tf.float32)
+            
+            self.outputs_state_tensor, _state_tensor = tf.nn.dynamic_rnn(cell, rnn_inputs, initial_state=self.outputs_state_tensor)
 
             outputs_tensor = self.outputs_state_tensor
 
