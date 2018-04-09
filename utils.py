@@ -7,8 +7,8 @@ import random
 import numpy as np
 
 
-def read_data(filename, encoding="utf-8"):
-    with open(filename) as f:
+def read_data(filename):
+    with open(filename, encoding="utf-8") as f:
         data = f.read()
     data = list(data)
     return data
