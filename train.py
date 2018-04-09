@@ -59,7 +59,9 @@ with tf.Session() as sess:
             ##################
             # Your Code here
             ##################
-            feed_dict = {model.X:X, model.Y:Y,model.state_tensor:state}
+            input = utils.index_data(np.array([[X]]), dictionary)
+            label = utils.index_data(np.array([[Y]]), dictionary)
+            feed_dict = {model.X:input, model.Y:label,model.state_tensor:state}
 
             gs, _, state, l, summary_string = sess.run(
                 [model.global_step, model.optimizer, model.outputs_state_tensor, model.loss, model.merged_summary_op], feed_dict=feed_dict)
