@@ -39,7 +39,7 @@ def get_train_data(vocabulary, batch_size, num_steps):
 
     epoch_size = batch_partition_length // num_steps
 
-    for i in random(epoch_size):
+    for i in range(epoch_size):
         x = data_x[:, i * num_steps:(i + 1) * num_steps]
         y = data_x[:, i * num_steps + 1:(i + 1) * num_steps + 1]
         yield(x, y)
