@@ -33,7 +33,7 @@ def get_train_data(vocabulary, batch_size, num_steps):
     ##################
     data_len = len(vocabulary)
     batch_partition_length = data_len // batch_size
-    data_x = np.zeros([batch_size, batch_partition_length], dtype=np.int32)
+    data_x = np.zeros([batch_size, batch_partition_length], dtype=np.str)
     for i in range(batch_size):
         data_x[i] = vocabulary[batch_partition_length * i:batch_partition_length * (i + 1)]
 
