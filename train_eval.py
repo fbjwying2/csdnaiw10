@@ -28,8 +28,8 @@ if __name__ == '__main__':
             print(l.strip())
 
         # eval
-        print('################    eval    ################')
-        p = os.popen('python ./sample.py' + cmd)
-        for l in p:
-            print(l.strip())
+        #print('################    eval    ################')
+        #p = os.popen('python ./sample.py' + cmd)
+        #for l in p:
+        #    print(l.strip())
 
