@@ -65,6 +65,7 @@ class Model():
             ##################
             # Your Code here
             ##################
+            input_data = data
             # cell
             lstm_cell = tf.nn.rnn_cell.BasicLSTMCell(self.state_size, state_is_tuple=True)
             lstm_cell = tf.nn.rnn_cell.DropoutWrapper(lstm_cell, output_keep_prob=self.keep_prob)
@@ -73,7 +74,7 @@ class Model():
             cell = tf.nn.rnn_cell.DropoutWrapper(cell, output_keep_prob=self.keep_prob)
 
             self.state_tensor = cell.zero_state(self.batch_size, tf.float32)
-            outputs_tensor, self.outputs_state_tensor = tf.nn.dynamic_rnn(cell, data, initial_state=self.state_tensor)
+            outputs_tensor, self.outputs_state_tensor = tf.nn.dynamic_rnn(cell, input_data, initial_state=self.state_tensor)
 
         # concate every time step
         seq_output = tf.concat(outputs_tensor, 1)
