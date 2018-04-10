@@ -23,7 +23,7 @@ if __name__ == '__main__':
     for i in range(30):
        # train 1 epoch
         print('################    train    ################')
-        p = os.popen('python ./train_eval.py' + cmd)
+        p = os.popen('python ./train.py' + cmd)
         for l in p:
             print(l.strip())
 

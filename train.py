@@ -15,6 +15,7 @@ from utils import read_data
 from flags import parse_args
 FLAGS, unparsed = parse_args()
 
+print("train .....")
 
 logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(filename)s:%(lineno)d - %(message)s', level=logging.DEBUG)
@@ -24,17 +25,14 @@ cwdir = os.getcwd()
 vocabulary = read_data(cwdir + FLAGS.text)
 print('Data size', len(vocabulary))
 
-
-with open(cwdir + FLAGS.dictionary, encoding='utf-8') as inf:
+with open(cwdir + FLAGS.dictionary) as inf:
     dictionary = json.load(inf, encoding='utf-8')
 
-with open(cwdir + FLAGS.reverse_dictionary, encoding='utf-8') as inf:
+with open(cwdir + FLAGS.reverse_dictionary) as inf:
     reverse_dictionary = json.load(inf, encoding='utf-8')
-
 
 model = Model(learning_rate=FLAGS.learning_rate, batch_size=FLAGS.batch_size, num_steps=FLAGS.num_steps)
 model.build(cwdir + '/data/embedding.npy')
-
 
 with tf.Session() as sess:
     summary_string_writer = tf.summary.FileWriter(FLAGS.output_dir, sess.graph)
