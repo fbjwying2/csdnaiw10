@@ -32,7 +32,7 @@ class Model():
         self.rnn_layers = rnn_layers
         self.learning_rate = learning_rate
 
-        self.state_size = 128
+        self.state_size = dim_embedding
 
     def build(self, embedding_file=None):
         # global step
@@ -66,8 +66,6 @@ class Model():
             # Your Code here
             ##################
             # cell
-            rnn_inputs = data
-
             lstm_cell = tf.nn.rnn_cell.BasicLSTMCell(self.state_size, state_is_tuple=True)
             lstm_cell = tf.nn.rnn_cell.DropoutWrapper(lstm_cell, output_keep_prob=self.keep_prob)
             # 多层lstm cell 堆叠起来
@@ -75,11 +73,7 @@ class Model():
             cell = tf.nn.rnn_cell.DropoutWrapper(cell, output_keep_prob=self.keep_prob)
 
             self.state_tensor = cell.zero_state(self.batch_size, tf.float32)
-            
-            self.outputs_state_tensor, _state_tensor = tf.nn.dynamic_rnn(cell, rnn_inputs, initial_state=self.state_tensor)
-
-            outputs_tensor = self.outputs_state_tensor
-
+            outputs_tensor, self.outputs_state_tensor = tf.nn.dynamic_rnn(cell, data, initial_state=self.state_tensor)
 
         # concate every time step
         seq_output = tf.concat(outputs_tensor, 1)
